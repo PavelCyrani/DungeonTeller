@@ -32,7 +32,6 @@ public class Map {
         inicializeCommands();
         this.actPosition = rooms.get(1);
         exit = false;
-        logReset();
     }
 
     private void inicializeRooms(String file) {
@@ -65,6 +64,7 @@ public class Map {
 
     public void start() {
         try {
+            clearLog();
             do {
                 chooseAction();
             } while (!exit);
@@ -74,7 +74,7 @@ public class Map {
     }
 
     private void saveCommand(String command) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("commLog.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("commLog.txt", true))) {
             bw.write(command + " - " + new Date());
             bw.newLine();
         } catch (IOException e) {
@@ -82,8 +82,8 @@ public class Map {
         }
     }
 
-    private void logReset() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("commLog.txt", true))) {
+    private void clearLog() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("commLog.txt", false))) {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
