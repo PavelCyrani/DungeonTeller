@@ -1,30 +1,29 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+package map;
+
+import map.commands.*;
+
+import java.io.*;
+import java.util.*;
 
 public class Map {
     private Room actPosition;
     private HashMap<Integer, Room> rooms;
-
-    public Room getActPosition() {
-        return actPosition;
-    }
-
-    public void setActPosition(Room actPosition) {
-        this.actPosition = actPosition;
-    }
+    private HashMap<String, Command> commands;
+    private LinkedList<String> commandsString;
+    private boolean exit;
 
     public Map() {
         this.rooms = new HashMap<>();
-        fillHashMap("map.txt");
+        this.commands = new HashMap<>();
+        this.commandsString = new LinkedList<>();
+        inicializeRooms("map.txt");
+        inicializeCommands();
         this.actPosition = rooms.get(1);
+        exit = false;
+        logReset();
     }
 
-    public void fillHashMap(String file) {
+    private void inicializeRooms(String file) {
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             while ((line = br.readLine()) != null) {
@@ -43,6 +42,59 @@ public class Map {
         }
     }
 
+    private void inicializeCommands() {
+        commands.put("look", new Look());
+        commands.put("move", new Move());
+        commands.put("quit", new Quit());
+        commandsString.add("look");
+        commandsString.add("move");
+        commandsString.add("quit");
+    }
+
+    public void start() {
+        try {
+            do {
+                chooseAction();
+            } while (!exit);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void saveCommand(String command) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("commLog.txt"))) {
+            bw.write(command + " - " + new Date());
+            bw.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void logReset() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("commLog.txt", true))) {
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private void chooseAction() {
+        Scanner sc = new Scanner(System.in);
+        String action = "";
+        System.out.println("What would you like to do?\nYou can choose: " + commandsString);
+        System.out.print(">> ");
+        action = sc.nextLine();
+        action.toLowerCase();
+        saveCommand(action);
+        if (commands.containsKey(action)) {
+            System.out.println(">> " + commands.get(action).execute());
+            exit = commands.get(action).exit();
+        } else {
+            System.out.println(">> Undefined command");
+        }
+    }
+
+    /*
+
     public void move() {
         Scanner sc = new Scanner(System.in);
         String direction = "";
@@ -54,7 +106,7 @@ public class Map {
                 sc.nextLine();
                 if (direction.equalsIgnoreCase("north") || direction.equalsIgnoreCase("south") ||
                         direction.equalsIgnoreCase("west") || direction.equalsIgnoreCase("east") ||
-                direction.equalsIgnoreCase("nowhere")) {
+                        direction.equalsIgnoreCase("nowhere")) {
                     repeat = false;
                 } else {
                     repeat = true;
@@ -101,9 +153,11 @@ public class Map {
                 System.out.println("You choose to stay");
         }
     }
+*/
 
+    /*
     public String lookAround() {
-        String x = "You are at "+actPosition.getName() + "\nYou can go:";
+        String x = "You are at " + actPosition.getName() + "\nYou can go:";
         if (actPosition.getNorthID() != 0) {
             x += "north";
         }
@@ -118,54 +172,5 @@ public class Map {
         }
         return x;
     }
-
-    public String chooseAction() {
-        Scanner sc = new Scanner(System.in);
-        String action = "";
-        ArrayList<String> chooseable = new ArrayList<>();
-        chooseable.add("move");
-        chooseable.add("look");
-        System.out.println("What would you like to do?\nYou can choose: " + chooseable);
-        try {
-            boolean repeat = true;
-            while (repeat) {
-                action = sc.next();
-                sc.nextLine();
-                repeat = true;
-                if (chooseable.contains(action)) {
-                    repeat = false;
-                } else {
-                    System.out.println("Wrong action, choose only:\n" + chooseable);
-                }
-            }
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Something went wrong");
-        }
-        return action;
-    }
-
-    public void executeAction() {
-        switch (chooseAction()) {
-            case "move":
-                move();
-                break;
-            case "look":
-                System.out.println(lookAround());
-                break;
-        }
-    }
-
-    public void play() {
-        while (true) {
-            this.executeAction();
-        }//asd
-    }
-
-    @Override
-    public String toString() {
-        return "Map{" +
-                "actPosition=" + actPosition +
-                ", rooms=" + rooms +
-                '}';
-    }
+     */
 }
