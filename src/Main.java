@@ -5,6 +5,5 @@ public class Main {
 
         Map map = new Map();
         map.start();
-
     }
 }

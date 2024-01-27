@@ -3,7 +3,11 @@ package map.commands;
 public class Quit extends Command {
     @Override
     public String execute() {
-        return "GAME OVER";
+        String x = "GAME OVER     ";
+        for (int i = 0; i < 4; i++) {
+            x += x;
+        }
+        return x;
     }
 
     @Override

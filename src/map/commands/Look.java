@@ -1,39 +1,34 @@
 package map.commands;
 
+import map.Map;
+
 public class Look extends Command {
+    private Map map;
+
+    public Look(Map map) {
+        this.map = map;
+    }
+
     @Override
     public String execute() {
-        return null;
+        String x = "You are at " + map.getActPosition().getName() + ", you can go: ";
+        if (map.getActPosition().getNorthID() != 0) {
+            x += "north ";
+        }
+        if (map.getActPosition().getSouthID() != 0) {
+            x += "south ";
+        }
+        if (map.getActPosition().getWestID() != 0) {
+            x += "west ";
+        }
+        if (map.getActPosition().getEastID() != 0) {
+            x += "east ";
+        }
+        return x;
     }
 
     @Override
     public boolean exit() {
         return false;
     }
-    /*String direction = "";
-        Scanner sc = new Scanner(System.in);
-        ArrayList<String> available = new ArrayList<>();
-        available.add("nowhere");
-        available.add("north");
-        available.add("south");
-        available.add("west");
-        available.add("east");
-        try {
-            boolean repeat = true;
-            while (repeat) {
-
-                System.out.println("Where would you like to go ? " + available);
-                direction = sc.nextLine();
-                if (available.contains(direction)) {
-                    repeat = false;
-                } else {
-                    repeat = true;
-                    System.out.println("Wrong direction " + available);
-                }
-            }
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Something went wrong");
-        }
-
-        return "";*/
 }

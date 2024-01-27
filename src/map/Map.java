@@ -12,6 +12,18 @@ public class Map {
     private LinkedList<String> commandsString;
     private boolean exit;
 
+    public Room getActPosition() {
+        return actPosition;
+    }
+
+    public void setActPosition(Room actPosition) {
+        this.actPosition = actPosition;
+    }
+
+    public HashMap<Integer, Room> getRooms() {
+        return rooms;
+    }
+
     public Map() {
         this.rooms = new HashMap<>();
         this.commands = new HashMap<>();
@@ -43,8 +55,8 @@ public class Map {
     }
 
     private void inicializeCommands() {
-        commands.put("look", new Look());
-        commands.put("move", new Move());
+        commands.put("look", new Look(this));
+        commands.put("move", new Move(this));
         commands.put("quit", new Quit());
         commandsString.add("look");
         commandsString.add("move");
@@ -80,7 +92,7 @@ public class Map {
     private void chooseAction() {
         Scanner sc = new Scanner(System.in);
         String action = "";
-        System.out.println("What would you like to do?\nYou can choose: " + commandsString);
+        System.out.println(">> What would you like to do?\n>> You can choose: " + commandsString);
         System.out.print(">> ");
         action = sc.nextLine();
         action.toLowerCase();
@@ -92,85 +104,4 @@ public class Map {
             System.out.println(">> Undefined command");
         }
     }
-
-    /*
-
-    public void move() {
-        Scanner sc = new Scanner(System.in);
-        String direction = "";
-        try {
-            boolean repeat = true;
-            while (repeat) {
-                System.out.println("Where would you like to go (north, south, west, east, nowhere)");
-                direction = sc.next();
-                sc.nextLine();
-                if (direction.equalsIgnoreCase("north") || direction.equalsIgnoreCase("south") ||
-                        direction.equalsIgnoreCase("west") || direction.equalsIgnoreCase("east") ||
-                        direction.equalsIgnoreCase("nowhere")) {
-                    repeat = false;
-                } else {
-                    repeat = true;
-                    System.out.println("Wrong direction");
-                }
-            }
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Something went wrong");
-        }
-        switch (direction) {
-            case "north":
-                if (actPosition.getNorthID() == 0) {
-                    System.out.println("Nothing there");
-                } else {
-                    actPosition = rooms.get(actPosition.getNorthID());
-                    System.out.println("You are now in " + actPosition.getName());
-                }
-                break;
-            case "south":
-                if (actPosition.getSouthID() == 0) {
-                    System.out.println("Nothing there");
-                } else {
-                    actPosition = rooms.get(actPosition.getSouthID());
-                    System.out.println("You are now in " + actPosition.getName());
-                }
-                break;
-            case "east":
-                if (actPosition.getEastID() == 0) {
-                    System.out.println("Nothing there");
-                } else {
-                    actPosition = rooms.get(actPosition.getEastID());
-                    System.out.println("You are now in " + actPosition.getName());
-                }
-                break;
-            case "west":
-                if (actPosition.getWestID() == 0) {
-                    System.out.println("Nothing there");
-                } else {
-                    actPosition = rooms.get(actPosition.getWestID());
-                    System.out.println("You are now in " + actPosition.getName());
-                }
-                break;
-            case "nowhere":
-                System.out.println("You choose to stay");
-        }
-    }
-*/
-
-    /*
-    public String lookAround() {
-        String x = "You are at " + actPosition.getName() + "\nYou can go:";
-        if (actPosition.getNorthID() != 0) {
-            x += "north";
-        }
-        if (actPosition.getSouthID() != 0) {
-            x += " south";
-        }
-        if (actPosition.getEastID() != 0) {
-            x += " east";
-        }
-        if (actPosition.getWestID() != 0) {
-            x += " west";
-        }
-        return x;
-    }
-     */
 }
