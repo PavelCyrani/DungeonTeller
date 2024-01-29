@@ -1,5 +1,11 @@
 package map.enemys;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
+
 public class Boss extends Enemy {
     public Boss() {
         this.name = "Librarian";
@@ -7,6 +13,9 @@ public class Boss extends Enemy {
         this.timeToDefeat = 30;
     }
 
+    @Override
+    public boolean fight() {
+    }
     @Override
     public String winLine() {
         return "Your name is Shame.";

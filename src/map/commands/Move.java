@@ -50,6 +50,13 @@ public class Move extends Command {
                 default:
                     return "You didn't move";
             }
+            if(game.getActPosition().getEnemy() != null){
+                if(game.getActPosition().getEnemy().fight()){
+
+                }else {
+                    new Quit().execute();
+                }
+            }
             return "You are now at " + game.getActPosition().getName();
         } else {
             return "Wrong direction. " + available;
