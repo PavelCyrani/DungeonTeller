@@ -1,12 +1,14 @@
 package map;
 
 import map.commands.*;
+import map.items.Item;
 
 import java.io.*;
 import java.util.*;
 
-public class Map {
+public class Game {
     private Room actPosition;
+    private ArrayList<Item> items;
     private HashMap<Integer, Room> rooms;
     private HashMap<String, Command> commands;
     private LinkedList<String> commandsString;
@@ -14,6 +16,10 @@ public class Map {
 
     public Room getActPosition() {
         return actPosition;
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
     }
 
     public void setActPosition(Room actPosition) {
@@ -24,10 +30,11 @@ public class Map {
         return rooms;
     }
 
-    public Map() {
+    public Game() {
         this.rooms = new HashMap<>();
         this.commands = new HashMap<>();
         this.commandsString = new LinkedList<>();
+        this.items = new ArrayList<>();
         inicializeRooms("map.txt");
         inicializeCommands();
         this.actPosition = rooms.get(1);
@@ -54,12 +61,18 @@ public class Map {
     }
 
     private void inicializeCommands() {
-        //commands.put("look", new Look(this));
+        commands.put("look", new Look(this));
         commands.put("move", new Move(this));
+        commands.put("backpack", new ShowBackpack(this));
         commands.put("quit", new Quit());
-        //commandsString.add("look");
+        commandsString.add("look");
         commandsString.add("move");
+        commandsString.add("backpack");
         commandsString.add("quit");
+    }
+
+    public void addItem(Item item) {
+        items.add(item);
     }
 
     public void start() {

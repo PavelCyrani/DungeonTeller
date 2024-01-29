@@ -1,0 +1,2 @@
+4 Goblin enemyID: 1
+9 Boss enemyID: 2

@@ -1,4 +1,5 @@
-move - Mon Jan 29 09:28:24 CET 2024
-move - Mon Jan 29 09:28:29 CET 2024
-move - Mon Jan 29 09:28:32 CET 2024
-quit - Mon Jan 29 09:28:42 CET 2024
+move - Mon Jan 29 10:43:56 CET 2024
+move - Mon Jan 29 10:43:58 CET 2024
+look - Mon Jan 29 10:44:01 CET 2024
+backpack - Mon Jan 29 10:44:07 CET 2024
+quit - Mon Jan 29 10:44:08 CET 2024

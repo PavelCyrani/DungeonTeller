@@ -1,8 +1,13 @@
 package map.items;
 
-public class GoldfishPouch extends Item{
+public class GoldfishPouch extends Item {
     public GoldfishPouch() {
         this.name = "Pouch of goldfish";
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override

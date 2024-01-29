@@ -1,15 +1,15 @@
 package map.commands;
 
-import map.Map;
+import map.Game;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Move extends Command {
-    private Map map;
+    private Game game;
 
-    public Move(Map map) {
-        this.map = map;
+    public Move(Game game) {
+        this.game = game;
     }
 
     @Override
@@ -17,16 +17,16 @@ public class Move extends Command {
         Scanner sc = new Scanner(System.in);
         ArrayList<String> available = new ArrayList<>();
         String direction = "";
-        if (map.getActPosition().getNorthID() != 0) {
+        if (game.getActPosition().getNorthID() != 0) {
             available.add("north");
         }
-        if (map.getActPosition().getSouthID() != 0) {
+        if (game.getActPosition().getSouthID() != 0) {
             available.add("south");
         }
-        if (map.getActPosition().getWestID() != 0) {
+        if (game.getActPosition().getWestID() != 0) {
             available.add("west");
         }
-        if (map.getActPosition().getEastID() != 0) {
+        if (game.getActPosition().getEastID() != 0) {
             available.add("east");
         }
         available.add("nowhere");
@@ -36,21 +36,21 @@ public class Move extends Command {
         if (available.contains(direction)) {
             switch (direction) {
                 case "north":
-                    map.setActPosition(map.getRooms().get(map.getActPosition().getNorthID()));
+                    game.setActPosition(game.getRooms().get(game.getActPosition().getNorthID()));
                     break;
                 case "south":
-                    map.setActPosition(map.getRooms().get(map.getActPosition().getSouthID()));
+                    game.setActPosition(game.getRooms().get(game.getActPosition().getSouthID()));
                     break;
                 case "west":
-                    map.setActPosition(map.getRooms().get(map.getActPosition().getWestID()));
+                    game.setActPosition(game.getRooms().get(game.getActPosition().getWestID()));
                     break;
                 case "east":
-                    map.setActPosition(map.getRooms().get(map.getActPosition().getEastID()));
+                    game.setActPosition(game.getRooms().get(game.getActPosition().getEastID()));
                     break;
                 default:
                     return "You didn't move";
             }
-            return "You are now at " + map.getActPosition().getName();
+            return "You are now at " + game.getActPosition().getName();
         } else {
             return "Wrong direction. " + available;
         }

@@ -1,8 +1,13 @@
 package map.items;
 
-public class WisePotion extends Item{
+public class WisePotion extends Item {
     public WisePotion() {
         this.name = "Potion of wiseness";
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override

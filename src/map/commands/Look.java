@@ -1,28 +1,35 @@
 package map.commands;
 
-import map.Map;
+import map.Game;
+import map.items.*;
 
 public class Look extends Command {
-    private Map map;
+    private Game game;
 
-    public Look(Map map) {
-        this.map = map;
+    public Look(Game game) {
+        this.game = game;
     }
 
     @Override
     public String execute() {
-        String x = "You are at " + map.getActPosition().getName() + ", you can go: ";
-        if (map.getActPosition().getNorthID() != 0) {
+        String x = "You are at " + game.getActPosition().getName() + ", you can go: ";
+        if (game.getActPosition().getNorthID() != 0) {
             x += "north ";
         }
-        if (map.getActPosition().getSouthID() != 0) {
+        if (game.getActPosition().getSouthID() != 0) {
             x += "south ";
         }
-        if (map.getActPosition().getWestID() != 0) {
+        if (game.getActPosition().getWestID() != 0) {
             x += "west ";
         }
-        if (map.getActPosition().getEastID() != 0) {
+        if (game.getActPosition().getEastID() != 0) {
             x += "east ";
+        }
+        if (game.getActPosition().getItem() != null) {
+            Item item = game.getActPosition().getItem();
+            x += "\n>> You see something in the room, it's a " + item.getName();
+            game.addItem(item);
+            game.getActPosition().removeItem();
         }
         return x;
     }
