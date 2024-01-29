@@ -54,10 +54,10 @@ public class Map {
     }
 
     private void inicializeCommands() {
-        commands.put("look", new Look(this));
+        //commands.put("look", new Look(this));
         commands.put("move", new Move(this));
         commands.put("quit", new Quit());
-        commandsString.add("look");
+        //commandsString.add("look");
         commandsString.add("move");
         commandsString.add("quit");
     }

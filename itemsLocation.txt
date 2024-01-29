@@ -1,0 +1,3 @@
+3 WisePotion
+4 CoinPouch
+6 HeartOfGold

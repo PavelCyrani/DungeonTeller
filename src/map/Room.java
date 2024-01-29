@@ -1,5 +1,7 @@
 package map;
 
+import map.items.Item;
+
 public class Room {
     private int ID;
     private String name;
@@ -7,6 +9,7 @@ public class Room {
     private int southID;
     private int eastID;
     private int westID;
+    private Item item;
 
     public int getID() {
         return ID;
