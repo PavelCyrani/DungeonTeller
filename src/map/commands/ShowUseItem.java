@@ -33,7 +33,7 @@ public class ShowUseItem extends Command {
 
             String decision = sc.nextLine().toLowerCase();
             if (decision.equals("yes")) {
-                comm = new
+                //comm = new
             }
         } else {
             return "You don't have any items.";

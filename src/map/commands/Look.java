@@ -29,7 +29,7 @@ public class Look extends Command {
             Item item = game.getActPosition().getItem();
             x += "\n>> You see something in the room, it's a " + item.getName();
             game.addItem(item);
-            game.getActPosition().removeItem();
+            game.getActPosition().setItem(null);
         }
         return x;
     }

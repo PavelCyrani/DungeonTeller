@@ -16,6 +16,7 @@ public class ShowBackpack extends Command {
         String x = "Your backpack:  ";
         for (Item item : game.getItems()) {
             x += i + ": " + item + "  ";
+            i++;
         }
         return x;
     }

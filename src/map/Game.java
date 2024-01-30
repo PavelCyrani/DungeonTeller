@@ -1,7 +1,12 @@
 package map;
 
 import map.commands.*;
+import map.enemys.Boss;
+import map.enemys.Goblin;
+import map.items.GoldfishPouch;
+import map.items.HeartOfGold;
 import map.items.Item;
+import map.items.WisePotion;
 
 import java.io.*;
 import java.util.*;
@@ -26,6 +31,10 @@ public class Game {
         this.actPosition = actPosition;
     }
 
+    public void setExit(boolean exit) {
+        this.exit = exit;
+    }
+
     public HashMap<Integer, Room> getRooms() {
         return rooms;
     }
@@ -35,15 +44,15 @@ public class Game {
         this.commands = new HashMap<>();
         this.commandsString = new LinkedList<>();
         this.items = new ArrayList<>();
-        inicializeRooms("map.txt");
+        inicializeRooms("map.txt", "itemLocation.txt", "enemyLocation.txt");
         inicializeCommands();
         this.actPosition = rooms.get(1);
         exit = false;
     }
 
-    private void inicializeRooms(String file) {
+    private void inicializeRooms(String roomFile, String itemFile, String enemyFile) {
         String line;
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(roomFile))) {
             while ((line = br.readLine()) != null) {
                 String roomName = (String) line.subSequence(2, line.length() - 8);
                 int roomID = Integer.parseInt((String) line.subSequence(0, 1));
@@ -54,6 +63,54 @@ public class Game {
                 this.rooms.put(roomID, new Room(roomName, roomID, northID, southID, eastID, westID));
             }
         } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(itemFile))) {
+            while ((line = br.readLine()) != null) {
+                Integer roomID = Integer.parseInt((String) line.subSequence(0, 1));
+                String itemID = (String) line.subSequence(line.length() - 1, line.length());
+                if (roomID > 0 && roomID < rooms.size()) {
+                    switch (itemID) {
+                        case "1":
+                            rooms.get(roomID).setItem(new WisePotion());
+                            break;
+                        case "2":
+                            rooms.get(roomID).setItem(new GoldfishPouch());
+                            break;
+                        case "3":
+                            rooms.get(roomID).setItem(new HeartOfGold());
+                            break;
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(enemyFile))) {
+            while ((line = br.readLine()) != null) {
+                Integer roomID = Integer.parseInt((String) line.subSequence(0, 1));
+                String enemyID = (String) line.subSequence(line.length() - 1, line.length());
+                /*if(roomID > 0 && roomID < rooms.size()){
+                    if(enemyID.equals("1")){
+                        rooms.get(roomID).setEnemy(new Goblin(this));
+                    } else if (enemyID.equals("2")) {
+                        rooms.get(roomID).setEnemy(new Boss(this));
+                    }*/
+                switch (enemyID) {
+                    case "1":
+                        rooms.get(roomID).setEnemy(new Goblin(this));
+                        break;
+                    case "2":
+                        rooms.get(roomID).setEnemy(new Boss(this));
+                        break;
+                }
+            }
+        } catch (
+                FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -116,5 +173,17 @@ public class Game {
         } else {
             System.out.println(">> Undefined command");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "actPosition=" + actPosition +
+                ", items=" + items +
+                ", rooms=" + rooms +
+                ", commands=" + commands +
+                ", commandsString=" + commandsString +
+                ", exit=" + exit +
+                '}';
     }
 }

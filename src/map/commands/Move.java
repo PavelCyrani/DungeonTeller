@@ -1,6 +1,7 @@
 package map.commands;
 
 import map.Game;
+import map.enemys.Enemy;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -50,11 +51,22 @@ public class Move extends Command {
                 default:
                     return "You didn't move";
             }
-            if(game.getActPosition().getEnemy() != null){
-                if(game.getActPosition().getEnemy().fight()){
-
-                }else {
-                    new Quit().execute();
+            if (game.getActPosition().getEnemy() != null) {
+                Enemy enemy = game.getActPosition().getEnemy();
+                System.out.println(">> There is a " + enemy.getName() + " !!");
+                if (enemy.fight()) {
+                    System.out.println(enemy.winLine());
+                    if (enemy.end()) {
+                        System.out.println(">> You have won !!! Nicely done");
+                        Command comm = new Quit();
+                        System.out.println(comm.execute());
+                        game.setExit(comm.exit());
+                    }
+                } else {
+                    System.out.println(enemy.defeatLine());
+                    Command comm = new Quit();
+                    System.out.println(comm.execute());
+                    game.setExit(comm.exit());
                 }
             }
             return "You are now at " + game.getActPosition().getName();
