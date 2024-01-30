@@ -55,18 +55,20 @@ public class Move extends Command {
                 Enemy enemy = game.getActPosition().getEnemy();
                 System.out.println(">> There is a " + enemy.getName() + " !!");
                 if (enemy.fight()) {
-                    System.out.println(enemy.winLine());
+                    System.out.println(enemy.defeatLine());
                     if (enemy.end()) {
                         System.out.println(">> You have won !!! Nicely done");
                         Command comm = new Quit();
                         System.out.println(comm.execute());
                         game.setExit(comm.exit());
+                        return "See you soon";
                     }
                 } else {
-                    System.out.println(enemy.defeatLine());
+                    System.out.println(enemy.winLine());
                     Command comm = new Quit();
                     System.out.println(comm.execute());
                     game.setExit(comm.exit());
+                    return "See you soon";
                 }
             }
             return "You are now at " + game.getActPosition().getName();

@@ -169,7 +169,9 @@ public class Game {
         saveCommand(action);
         if (commands.containsKey(action)) {
             System.out.println(">> " + commands.get(action).execute());
-            exit = commands.get(action).exit();
+            if (!(commands.get(action) instanceof Move)) {
+                exit = commands.get(action).exit();
+            }
         } else {
             System.out.println(">> Undefined command");
         }
