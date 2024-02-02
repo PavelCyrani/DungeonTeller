@@ -8,22 +8,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Goblin extends Enemy {
-
-    public static int timeDiff(Date firstDate, Date secondDate) {
-        int timeDifference;
-        if (firstDate.getMinutes() == secondDate.getMinutes()) {
-            timeDifference = secondDate.getSeconds() - firstDate.getSeconds();
-        } else {
-            int multiply = secondDate.getMinutes() - firstDate.getMinutes();
-            timeDifference = (60 * multiply) + secondDate.getSeconds() - firstDate.getSeconds();
-        }
-        return timeDifference;
-    }
 
     private Game game;
 
@@ -73,7 +63,7 @@ public class Goblin extends Enemy {
                 ">> Enter anything once you're ready to fight");
         System.out.print(">> ");
         sc.nextLine();
-        Date start = new Date();
+        Instant start = Instant.now();
         for (int i = 0; i < wordsToDefeat; i++) {
             boolean repeat = true;
             while (repeat) {
@@ -86,9 +76,9 @@ public class Goblin extends Enemy {
                 }
             }
         }
-        int timeTaken = timeDiff(start, new Date());
+        int timeTaken = timeDiff(start, Instant.now());
         int timeLeft = timeToDefeat - timeTaken;
-        if (timeLeft > timeToDefeat) {
+        if (timeLeft < 0) {
             System.out.println(">> Oh no, it took you too long, he got you ! (time left: " + timeLeft + " seconds)");
             if (game.getItems().contains(new HeartOfGold())) {
                 game.getItems().remove(new HeartOfGold());
