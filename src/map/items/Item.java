@@ -7,6 +7,10 @@ public abstract class Item {
 
     public abstract String effect();
 
+    public abstract boolean usableAnytime();
+
+    public abstract String itemToPickUp();
+
     @Override
     public String toString() {
         return name;

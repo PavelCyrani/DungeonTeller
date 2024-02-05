@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -34,13 +33,15 @@ public class Boss extends Enemy {
     @Override
     public boolean fight() {
         Scanner sc = new Scanner(System.in);
-        if (game.getItems().contains(new WisePotion())) {
+        if (game.classContains(new WisePotion())) {
             System.out.println(">> Would you like to use potion of wiseness ? (yes or smt else)");
             String decision = sc.nextLine();
             decision.toLowerCase();
             if (decision.equals("yes")) {
-                game.getItems().remove(new WisePotion());
-                wordsToDefeat -= 2;
+                game.removeClassItem(new WisePotion());
+                int lessWords = 3;
+                wordsToDefeat -= lessWords;
+                System.out.println(">> You will now need " + lessWords + " less words to win the battle");
             }
         }
         String[] wordsToType = new String[wordsToDefeat];
@@ -80,10 +81,10 @@ public class Boss extends Enemy {
         }
         int timeTaken = timeDiff(start, Instant.now());
         int timeLeft = timeToDefeat - timeTaken;
-        if (timeTaken < 0) {
+        if (timeLeft < 0) {
             System.out.println(">> Oh no, it took you too long, he got you ! (time left: " + timeLeft + " seconds)");
-            if (game.getItems().contains(new HeartOfGold())) {
-                game.getItems().remove(new HeartOfGold());
+            if (game.classContains(new HeartOfGold())) {
+                game.removeClassItem(new HeartOfGold());
                 System.out.println(">> But it's not over yet, heart of gold saved you, go get him, he thinks you are dead now !");
                 return fight();
             }
@@ -96,12 +97,12 @@ public class Boss extends Enemy {
 
     @Override
     public String winLine() {
-        return ">> " + name + " Your name is Shame.";
+        return ">> " + name + ": Your name is Shame.";
     }
 
     @Override
     public String defeatLine() {
-        return ">> " + name + " I am defeated, NOOoo....";
+        return ">> " + name + ": I am defeated, NOOoo....";
     }
 
     @Override

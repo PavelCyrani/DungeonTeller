@@ -14,4 +14,14 @@ public class GoldfishPouch extends Item {
     public String effect() {
         return "You can use them to buy something nice for you";
     }
+
+    @Override
+    public boolean usableAnytime() {
+        return false;
+    }
+
+    @Override
+    public String itemToPickUp() {
+        return null;
+    }
 }

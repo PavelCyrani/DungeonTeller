@@ -44,13 +44,13 @@ public class Game {
         this.commands = new HashMap<>();
         this.commandsString = new LinkedList<>();
         this.items = new ArrayList<>();
-        inicializeRooms("map.txt", "itemLocation.txt", "enemyLocation.txt");
-        inicializeCommands();
+        initializeRooms("map.txt", "itemLocation.txt", "enemyLocation.txt");
+        initializeEnemy();
         this.actPosition = rooms.get(1);
         exit = false;
     }
 
-    private void inicializeRooms(String roomFile, String itemFile, String enemyFile) {
+    private void initializeRooms(String roomFile, String itemFile, String enemyFile) {
         String line;
         try (BufferedReader br = new BufferedReader(new FileReader(roomFile))) {
             while ((line = br.readLine()) != null) {
@@ -117,7 +117,7 @@ public class Game {
         }
     }
 
-    private void inicializeCommands() {
+    private void initializeEnemy() {
         commands.put("look", new Look(this));
         commands.put("move", new Move(this));
         commands.put("backpack", new ShowBackpack(this));
@@ -174,6 +174,25 @@ public class Game {
             }
         } else {
             System.out.println(">> Undefined command");
+        }
+    }
+
+    public boolean classContains(Item searchedItem) {
+        for (Item ownedItem : items) {
+            if (searchedItem.getClass() == ownedItem.getClass()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeClassItem(Item item) {
+        String cl = item.getClass().getName();
+        for (Item ownedItem : items) {
+            if (ownedItem.getClass().getName().equals(cl)) {
+                items.remove(ownedItem);
+                break;
+            }
         }
     }
 

@@ -13,10 +13,6 @@ public class Room {
     private Item item;
     private Enemy enemy;
 
-    public int getID() {
-        return ID;
-    }
-
     public String getName() {
         return name;
     }

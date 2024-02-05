@@ -20,8 +20,8 @@ public abstract class Enemy {
         return timeDifference;
     }
 
-    public static int timeDiff(Instant start, Instant end){
-        return Integer.parseInt(Long.toString(Duration.between(start,end).toSeconds()));
+    public static int timeDiff(Instant start, Instant end) {
+        return Integer.parseInt(Long.toString(Duration.between(start, end).toSeconds()));
     }
 
     public abstract String getName();

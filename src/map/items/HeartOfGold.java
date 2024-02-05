@@ -15,4 +15,14 @@ public class HeartOfGold extends Item {
     public String effect() {
         return "You have a second chance, don't waste it";
     }
+
+    @Override
+    public boolean usableAnytime() {
+        return false;
+    }
+
+    @Override
+    public String itemToPickUp() {
+        return "Medic offer's you " + name + " for Pouch of goldfish. 2";
+    }
 }

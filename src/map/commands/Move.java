@@ -57,6 +57,7 @@ public class Move extends Command {
                 if (enemy.fight()) {
                     System.out.println(enemy.defeatLine());
                     if (enemy.end()) {
+                        game.getActPosition().setEnemy(null);
                         System.out.println(">> You have won !!! Nicely done");
                         Command comm = new Quit();
                         System.out.println(comm.execute());
