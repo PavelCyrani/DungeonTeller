@@ -45,13 +45,21 @@ public class Game {
         this.commandsString = new LinkedList<>();
         this.items = new ArrayList<>();
         initializeRooms("map.txt", "itemLocation.txt", "enemyLocation.txt");
-        initializeEnemy();
+        initializeCommands();
         this.actPosition = rooms.get(1);
         exit = false;
     }
 
+    /**
+     * Method for creating map, rooms that lead to another rooms, items and enemy's in them
+     *
+     * @param roomFile
+     * @param itemFile
+     * @param enemyFile
+     */
     private void initializeRooms(String roomFile, String itemFile, String enemyFile) {
         String line;
+        //rooms
         try (BufferedReader br = new BufferedReader(new FileReader(roomFile))) {
             while ((line = br.readLine()) != null) {
                 String roomName = (String) line.subSequence(2, line.length() - 8);
@@ -67,6 +75,7 @@ public class Game {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //items
         try (BufferedReader br = new BufferedReader(new FileReader(itemFile))) {
             while ((line = br.readLine()) != null) {
                 Integer roomID = Integer.parseInt((String) line.subSequence(0, 1));
@@ -90,16 +99,11 @@ public class Game {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //enemy's
         try (BufferedReader br = new BufferedReader(new FileReader(enemyFile))) {
             while ((line = br.readLine()) != null) {
                 Integer roomID = Integer.parseInt((String) line.subSequence(0, 1));
                 String enemyID = (String) line.subSequence(line.length() - 1, line.length());
-                /*if(roomID > 0 && roomID < rooms.size()){
-                    if(enemyID.equals("1")){
-                        rooms.get(roomID).setEnemy(new Goblin(this));
-                    } else if (enemyID.equals("2")) {
-                        rooms.get(roomID).setEnemy(new Boss(this));
-                    }*/
                 switch (enemyID) {
                     case "1":
                         rooms.get(roomID).setEnemy(new Goblin(this));
@@ -117,7 +121,10 @@ public class Game {
         }
     }
 
-    private void initializeEnemy() {
+    /**
+     * Method for initialization of commands
+     */
+    private void initializeCommands() {
         commands.put("look", new Look(this));
         commands.put("move", new Move(this));
         commands.put("backpack", new ShowBackpack(this));
@@ -132,6 +139,9 @@ public class Game {
         items.add(item);
     }
 
+    /**
+     * Game start method for this class
+     */
     public void start() {
         try {
             clearLog();
@@ -143,6 +153,11 @@ public class Game {
         }
     }
 
+    /**
+     * Method for writing down commands used by player into file, with date of usage
+     *
+     * @param command
+     */
     private void saveCommand(String command) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("commLog.txt", true))) {
             bw.write(command + " - " + new Date());
@@ -152,6 +167,9 @@ public class Game {
         }
     }
 
+    /**
+     * Method that clears register of commands at the begging of the game
+     */
     private void clearLog() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("commLog.txt", false))) {
         } catch (IOException e) {
@@ -159,6 +177,9 @@ public class Game {
         }
     }
 
+    /**
+     * Method that let player decide what he wants to do, then executes wanted command
+     */
     private void chooseAction() {
         Scanner sc = new Scanner(System.in);
         String action = "";
@@ -177,6 +198,12 @@ public class Game {
         }
     }
 
+    /**
+     * Method contains that searches for Items of same class in items arrayList
+     *
+     * @param searchedItem
+     * @return boolean (true if Item in items with same class was found)
+     */
     public boolean classContains(Item searchedItem) {
         for (Item ownedItem : items) {
             if (searchedItem.getClass() == ownedItem.getClass()) {
@@ -186,6 +213,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Method remove that removes item of same class
+     *
+     * @param item
+     */
     public void removeClassItem(Item item) {
         String cl = item.getClass().getName();
         for (Item ownedItem : items) {

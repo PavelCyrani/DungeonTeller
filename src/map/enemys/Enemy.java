@@ -9,28 +9,36 @@ public abstract class Enemy {
     protected int wordsToDefeat;
     protected int timeToDefeat;
 
-    public static int timeDiff(Date firstDate, Date secondDate) {
-        int timeDifference;
-        if (firstDate.getMinutes() == secondDate.getMinutes()) {
-            timeDifference = secondDate.getSeconds() - firstDate.getSeconds();
-        } else {
-            int multiply = secondDate.getMinutes() - firstDate.getMinutes();
-            timeDifference = (60 * multiply) + secondDate.getSeconds() - firstDate.getSeconds();
-        }
-        return timeDifference;
-    }
-
+    /**
+     * @param start
+     * @param end
+     * @return int (time difference between two instants)
+     */
     public static int timeDiff(Instant start, Instant end) {
         return Integer.parseInt(Long.toString(Duration.between(start, end).toSeconds()));
     }
 
     public abstract String getName();
 
+    /**
+     * Method that takes care of battle with enemy
+     *
+     * @return boolean (true if fight was won by player)
+     */
     public abstract boolean fight();
 
+    /**
+     * @return String (line that will enemy say if he has won)
+     */
     public abstract String winLine();
 
+    /**
+     * @return String (line that will enemy say if he has lost)
+     */
     public abstract String defeatLine();
 
+    /**
+     * @return boolean (true if game ends after killing this enemy)
+     */
     public abstract boolean end();
 }
