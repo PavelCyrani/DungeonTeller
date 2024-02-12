@@ -1,3 +1,4 @@
 3 WisePotion itemID: 1
 4 GoldfishPouch itemID: 2
 6 HeartOfGold itemID: 3
+7 EasterEgg itemID: 4

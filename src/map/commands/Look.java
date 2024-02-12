@@ -32,8 +32,12 @@ public class Look extends Command {
             String need;
             if ((need = item.itemToPickUp()) == null) {
                 x += "\n>> You see something in the room, it's a " + item.getName();
-                game.addItem(item);
-                game.getActPosition().setItem(null);
+                if (item.getName().equals("stone sigill")) {
+                    System.out.println(item.effect());
+                } else {
+                    game.addItem(item);
+                    game.getActPosition().setItem(null);
+                }
             } else {
                 int neededItemID = Integer.parseInt((String) need.subSequence(need.length() - 1, need.length()));
                 System.out.println(">> " + (String) need.subSequence(0, need.length() - 2));

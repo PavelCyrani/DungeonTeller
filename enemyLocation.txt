@@ -1,2 +1,3 @@
 4 Goblin enemyID: 1
 9 Boss enemyID: 2
+7 Wolfs enemyID: 3

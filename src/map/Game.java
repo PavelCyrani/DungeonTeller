@@ -3,10 +3,8 @@ package map;
 import map.commands.*;
 import map.enemys.Boss;
 import map.enemys.Goblin;
-import map.items.GoldfishPouch;
-import map.items.HeartOfGold;
-import map.items.Item;
-import map.items.WisePotion;
+import map.enemys.Wolfs;
+import map.items.*;
 
 import java.io.*;
 import java.util.*;
@@ -91,6 +89,9 @@ public class Game {
                         case "3":
                             rooms.get(roomID).setItem(new HeartOfGold());
                             break;
+                        case "4":
+                            rooms.get(roomID).setItem(new EasterEgg(this));
+                            break;
                     }
                 }
             }
@@ -111,6 +112,9 @@ public class Game {
                     case "2":
                         rooms.get(roomID).setEnemy(new Boss(this));
                         break;
+                    case "3":
+                        rooms.get(roomID).setEnemy(new Wolfs(this));
+                        break;
                 }
             }
         } catch (
@@ -125,12 +129,20 @@ public class Game {
      * Method for initialization of commands
      */
     private void initializeCommands() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print(">> Would you like to play with hardcore movement? (yes or no)\n>> ");
+        if (sc.nextLine().equals("yes")) {
+            System.out.println(">> There are no doors, but magical walk-throughs, you can use them only once for each direction.");
+            commands.put("move", new MoveEXTREME(this));
+            commandsString.add("move");
+        } else {
+            commands.put("move", new Move(this));
+            commandsString.add("move");
+        }
         commands.put("look", new Look(this));
-        commands.put("move", new Move(this));
         commands.put("backpack", new ShowBackpack(this));
         commands.put("quit", new Quit());
         commandsString.add("look");
-        commandsString.add("move");
         commandsString.add("backpack");
         commandsString.add("quit");
     }
@@ -143,6 +155,7 @@ public class Game {
      * Game start method for this class
      */
     public void start() {
+        System.out.println(">> You are in a room, you don't remember anything, you need to try to get out. ");
         try {
             clearLog();
             do {

@@ -12,14 +12,13 @@ import java.time.Instant;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Goblin extends Enemy {
-
+public class Wolfs extends Enemy {
     private Game game;
 
-    public Goblin(Game game) {
-        this.name = "ADHD Goblin";
-        this.wordsToDefeat = 4;
-        this.timeToDefeat = 10;
+    public Wolfs(Game game) {
+        this.name = "pack of wolves";
+        this.wordsToDefeat = 3;
+        this.timeToDefeat = 4;
         this.game = game;
     }
 
@@ -32,7 +31,7 @@ public class Goblin extends Enemy {
     public boolean fight() {
         Scanner sc = new Scanner(System.in);
         if (game.classContains(new WisePotion())) {
-            System.out.println(">> Would you like to use potion of wiseness? (yes or smt else)");
+            System.out.println(">> Would you like to use potion of wiseness ? (yes or smt else)");
             String decision = sc.nextLine();
             decision.toLowerCase();
             if (decision.equals("yes")) {
@@ -60,7 +59,7 @@ public class Goblin extends Enemy {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(">> It hasn't noticed you yet, but once you start the battle you'll have to repeat the words after the ADHD Goblin fastest you can !!!\n" +
+        System.out.println(">> It hasn't noticed you yet, but once you start the battle you'll have to repeat the words after the pack of wolfs fastest you can !!!\n" +
                 ">> Enter anything once you're ready to fight");
         System.out.print(">> ");
         sc.nextLine();
@@ -95,12 +94,12 @@ public class Goblin extends Enemy {
 
     @Override
     public String winLine() {
-        return ">> " + name + ": Ugh Gha Glu Plagha....";
+        return ">> " + name + ": Wufiky wuf!";
     }
 
     @Override
     public String defeatLine() {
-        return ">> " + name + ": Eh....";
+        return ">> " + name + ": wuf...";
     }
 
     @Override

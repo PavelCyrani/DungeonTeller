@@ -7,7 +7,7 @@ public class Quit extends Command {
         for (int i = 0; i < 4; i++) {
             x += x;
         }
-        return ">> " + x;
+        return x;
     }
 
     @Override

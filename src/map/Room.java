@@ -33,6 +33,22 @@ public class Room {
         return westID;
     }
 
+    public void setNorthID(int northID) {
+        this.northID = northID;
+    }
+
+    public void setSouthID(int southID) {
+        this.southID = southID;
+    }
+
+    public void setEastID(int eastID) {
+        this.eastID = eastID;
+    }
+
+    public void setWestID(int westID) {
+        this.westID = westID;
+    }
+
     public Item getItem() {
         return item;
     }
